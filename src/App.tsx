@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TodoList } from "./Components/TodoList/TodoList";
+import { TaskType, TodoList } from "./Components/TodoList/TodoList";
 import "./App.css";
 import { v1 } from "uuid";
 import { AddInputTodolist } from "./Components/AddInputTodolist/AddInputTodolist";
@@ -11,6 +11,9 @@ function App() {
     title: string;
     filter: FilterValuesType;
 
+  }
+  type TaskStateType ={
+    [key: string]: Array<TaskType>;
   }
 
 
@@ -41,8 +44,16 @@ function App() {
     task.isDone = isDone;
     setTasks({...tasksObj});
    }
-  
   }
+  function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+    const tasks = tasksObj[todolistId];
+   let task = tasks.find(t => t.id === taskId);
+   if (task) {
+    task.title = newTitle;
+    setTasks({...tasksObj});
+   }
+  }
+
   let todolistId1 = v1();
   let todolistId2 = v1();
 
@@ -58,7 +69,7 @@ function App() {
     {id: todolistId1, title: "Learn", filter: "All"},
     {id: todolistId2, title: "Bay", filter: "All"},
   ]);
-  let [tasksObj, setTasks] = useState({
+  let [tasksObj, setTasks] = useState<TaskStateType>({
     [todolistId1]:[
       { id: v1(), title: "CSS", isDone: true },
       { id: v1(), title: "JS", isDone: true },
@@ -103,6 +114,7 @@ function App() {
       addTask={addTask}
       filter={tl.filter}
       changeTaskStatus={changeTaskStatus}
+      changeTaskTitle={changeTaskTitle}
       removeTodolist={removeTodolist}
     />
      })} 
