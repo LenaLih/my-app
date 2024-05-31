@@ -1,8 +1,7 @@
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 
 type PropsTypeInput = {
-  id: string;
-  addTask: (title: string, todolistId: string) => void;
+  addItem: (title: string) => void;
 };
 
 export function AddInputTodolist(props: PropsTypeInput) {
@@ -13,15 +12,12 @@ export function AddInputTodolist(props: PropsTypeInput) {
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     setError(null);
     if (e.key === "Enter") {
-      if (newTaskTitle.trim() !== "") {
-        props.addTask(newTaskTitle.trim(), props.id);
-        setNewTaskTitle("");
-      }
+      addTask();
     }
   };
   const addTask = () => {
     if (newTaskTitle.trim() !== "") {
-      props.addTask(newTaskTitle.trim(), props.id);
+      props.addItem(newTaskTitle.trim());
       setNewTaskTitle("");
     } else {
       setError("Title is required");

@@ -72,9 +72,19 @@ function App() {
     ]
   })
 
+  function addTodolist(title: string) {
+    let todolist: TodolistType = {
+      id: v1(),
+    title: title,
+    filter: "All" 
+    } 
+    setTodolists([todolist, ...todolists]);
+    setTasks({...tasksObj, [todolist.id]: []})
+  };
+
   return (
     <div className="app">
-<AddInputTodolist id={"hhh"} addTask={() => {}} />
+<AddInputTodolist  addItem= { addTodolist } />
      {todolists.map((tl) => {
         let tasksForValue = tasksObj[tl.id];
         if (tl.filter === "Completed") {
