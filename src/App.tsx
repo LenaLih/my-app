@@ -53,6 +53,13 @@ function App() {
     setTasks({...tasksObj});
    }
   }
+  function changeTodolistTitle(newTitle: string, id: string) {
+    const todolist = todolists.find(tl => tl.id === id); 
+    if(todolist) {
+      todolist.title = newTitle;
+      setTodolists([...todolists]);
+    }
+  }
 
   let todolistId1 = v1();
   let todolistId2 = v1();
@@ -116,6 +123,8 @@ function App() {
       changeTaskStatus={changeTaskStatus}
       changeTaskTitle={changeTaskTitle}
       removeTodolist={removeTodolist}
+      changeTodolistTitle={changeTodolistTitle}
+
     />
      })} 
     </div>
